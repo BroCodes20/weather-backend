@@ -6,19 +6,18 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
+app.use(cors());
 app.get("/weather", async (req, res) => {
   const { lat, lon } = req.query;
 
   if (!lat || !lon) {
-    return res.status(400).json({
-      error: "Latitude and Longitude are required",
-    });
+    return res
+      .status(400)
+      .json({ error: "Latitude and longitude are required" });
   }
 
   try {
@@ -34,12 +33,7 @@ app.get("/weather", async (req, res) => {
       }
     );
 
-    const data = response.data;
-    res.json({
-      temp: data.main.temp,
-      description: data.weather[0].description,
-      city: data.name,
-    });
+    res.json(response.data);
   } catch (err) {
     res.status(500).json({ error: "Unable to fetch weather data" });
   }
