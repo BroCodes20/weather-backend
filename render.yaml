@@ -1,0 +1,11 @@
+# render.yaml
+services:
+  - type: web
+    name: weather-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: WEATHER_API_KEY
+        sync: false
